@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Entity\Vacancy;
+namespace App\Model\Entity\Vacancy\Entity;
 
 class Vacancy
 {
