@@ -5,18 +5,31 @@ namespace App\Model\Vacancy\Entity;
 class Vacancy
 {
     /**
-     * @var string
+     * @var Id
      */
-    private $title;
+    private Id $id;
     /**
      * @var string
      */
-    private $description;
+    private string $title;
+    /**
+     * @var string
+     */
+    private string $description;
 
-    public function __construct(string $title, string $description)
+    public function __construct(Id $id, string $title, string $description)
     {
+        $this->id = $id;
         $this->title = $title;
         $this->description = $description;
+    }
+
+    /**
+     * @return Id
+     */
+    public function getId(): Id
+    {
+        return $this->id;
     }
 
     /**
