@@ -2,18 +2,28 @@
 
 namespace App\Model\Vacancy\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="vacancies")
+ */
 class Vacancy
 {
     /**
-     * @var Id
+     * @ORM\Column(type="vacancy_id")
+     * @ORM\Id
      */
     private Id $id;
     /**
      * @var string
+     * @ORM\Column(type="string", name="title")
      */
     private string $title;
     /**
      * @var string
+     * @ORM\Column(type="string", name="description")
      */
     private string $description;
 
