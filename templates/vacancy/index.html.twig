@@ -2,20 +2,14 @@
 
 {% block title %} Vacancies {% endblock %}
 
+{% block breadcrumbs %}
+    <ol class="breadcrumb float-sm-left">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item active">Vacancies</li>
+    </ol>
+{% endblock %}
+
 {% block body %}
-    <div class="col-12">
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-12">
-                        <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Vacancies</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
         <div class="card">
         <div class="card-header">
             <h3 class="card-title">Vacancies</h3>
@@ -44,6 +38,5 @@
             </table>
         </div>
         <!-- /.card-body -->
-    </div>
     </div>
 {% endblock %}

@@ -44,8 +44,19 @@
                 <!-- /.sidebar-menu -->
             </aside>
             <div class="content-wrapper">
+                <div class="col-12">
+                    <section class="content-header">
+                        <div class="container-fluid">
+                            <div class="row mb-2">
+                                <div class="col-12">
+                                    {% block breadcrumbs %}{% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
-                {% block body %}{% endblock %}
+                    {% block body %}{% endblock %}
+                </div>
             </div>
         </div>
         {% block javascripts %}
