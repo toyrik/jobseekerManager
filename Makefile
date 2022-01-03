@@ -19,10 +19,16 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-manager-init: manager-composer-install
+manager-init: manager-composer-install manager-assets-install
 
 manager-composer-install:
 	docker-compose run --rm manager-php-cli composer install
 
 manager-test:
 	docker-compose run --rm manager-php-cli php bin/phpunit
+
+manager-assets-install:
+	docker-compose run --rm manager-node yarn install
+
+manager-assets-dev:
+	docker-compose run --rm manager-node npm run dev

@@ -24,5 +24,11 @@ services:
       - .:/app
       - composer:/root/.composer/cache
 
+  manager-node:
+    image: node:14-alpine
+    volumes:
+      - .:/app
+    working_dir: /app
+
 volumes:
   composer:
