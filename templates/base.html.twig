@@ -29,18 +29,11 @@
                     <span class="brand-text font-weight-light">JobSeeker</span>
                 </a>
                 <!-- Sidebar Menu -->
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ path('vacancies') }}" class="nav-link">
-                                <i class="fas fa-briefcase"></i>
-                                <p>
-                                    Vacancies
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="sidebar">
+                    <nav class="mt-2">
+                        {{ knp_menu_render('sidebar', {'currentClass': 'active'}) }}
+                    </nav>
+                </div>
                 <!-- /.sidebar-menu -->
             </aside>
             <div class="content-wrapper">
