@@ -39,6 +39,7 @@ manager-test:
 
 manager-assets-install:
 	docker-compose run --rm manager-node yarn install
+	docker-compose run --rm manager-node npm rebuild node-sass
 
 manager-assets-dev:
 	docker-compose run --rm manager-node npm run dev
