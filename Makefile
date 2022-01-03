@@ -19,10 +19,13 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-manager-init: manager-composer-install manager-assets-install
+manager-init: manager-composer-install manager-assets-install manager-migrations
 
 manager-composer-install:
 	docker-compose run --rm manager-php-cli composer install
+
+manager-migrations:
+	docker-compose run --rm manager-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 
 manager-test:
 	docker-compose run --rm manager-php-cli php bin/phpunit
