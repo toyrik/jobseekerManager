@@ -13,18 +13,24 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Vacancies</h3>
+            <div class="card-tools">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="btn btn-primary" href="{{ path('vacancies.create') }}">Create</a></li>
+                </ul>
+            </div>
         </div>
         <!-- /.card-header -->
+
         <div class="card-body p-0">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <td>
+                    <th>
                         Id
-                    </td>
-                    <td>
+                    </th>
+                    <th>
                         Title
-                    </td>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
