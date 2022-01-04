@@ -51,6 +51,11 @@
                     {% block body %}{% endblock %}
                 </div>
             </div>
+            <footer class="main-footer">
+                <div class="float-right d-none d-sm-block">
+                </div>
+                <strong>{{ 'now' | date('d.m.Y') }} <a href="https://toyrik.github.io">Toy Rik</a>.</strong>
+            </footer>
         </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
