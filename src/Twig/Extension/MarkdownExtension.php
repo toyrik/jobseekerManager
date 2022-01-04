@@ -2,7 +2,7 @@
 
 namespace App\Twig\Extension;
 
-use cebe\markdown\MarkdownExtra;
+use cebe\markdown\GithubMarkdown;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -10,7 +10,7 @@ class MarkdownExtension extends AbstractExtension
 {
     private $markdown;
 
-    public function __construct(MarkdownExtra $markdown)
+    public function __construct(GithubMarkdown $markdown)
     {
         $this->markdown = $markdown;
     }

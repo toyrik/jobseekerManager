@@ -28,4 +28,4 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: build, alias: sidebar }
 
-    cebe\markdown\MarkdownExtra:
+    cebe\markdown\GithubMarkdown:
