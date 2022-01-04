@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Vacancy\UseCase\Create;
+namespace App\Model\Vacancy\UseCase\Edit;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
@@ -14,6 +14,7 @@ class Form extends AbstractType
         $builder
             ->add('title', Type\TextType::class, ['label' => 'Title'])
             ->add('description', Type\TextareaType::class, ['label' => 'Description', 'attr' => ['rows' => 10]]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

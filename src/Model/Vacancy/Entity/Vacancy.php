@@ -57,4 +57,10 @@ class Vacancy
     {
         return $this->description;
     }
+
+    public function edit(string $title, string $description): void
+    {
+        $this->title = $title;
+        $this->description = $description;
+    }
 }

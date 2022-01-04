@@ -2,6 +2,7 @@
 
 namespace App\Controller\Vacancy;
 
+use App\Controller\ErrorHandler;
 use App\Model\Vacancy\Entity\Vacancy;
 use App\ReadModel\Vacancy\VacancyFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Vacancy\UseCase\Create;
+use App\Model\Vacancy\UseCase\Edit;
 
 /**
  * @Route ("/vacancies")
@@ -16,11 +18,13 @@ use App\Model\Vacancy\UseCase\Create;
 class VacancyController extends AbstractController
 {
     private const PER_PAGE = 10;
+    private $errors;
     private VacancyFetcher $fetcher;
 
-    public function __construct(VacancyFetcher $fetcher)
+    public function __construct(VacancyFetcher $fetcher, ErrorHandler $handler)
     {
         $this->fetcher = $fetcher;
+        $this->errors = $handler;
     }
 
     /**
@@ -72,6 +76,33 @@ class VacancyController extends AbstractController
     public function show(Vacancy $vacancy): Response
     {
         return $this->render('vacancy/show.html.twig', compact('vacancy'));
+    }
+
+    /**
+     * @Route("/{id}/edit", name="vacancies.edit")
+     *
+     */
+    public function edit(Vacancy $vacancy, Request $request, Edit\Handler $handler): Response
+    {
+        $command = Edit\Command::fromVacancy($vacancy);
+
+        $form = $this->createForm(Edit\Form::class, $command);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                return $this->redirectToRoute('vacancies.show',['id' => $vacancy->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('vacancy/edit.html.twig',[
+            'vacancy' => $vacancy,
+            'form' => $form->createView(),
+        ]);
     }
 
 }
