@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vacancies{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb float-sm-left">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('vacancies') }}">Vacancies</a></li>
+        <li class="breadcrumb-item active">{{ vacancy.title }}</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ vacancy.description }}
+        </div>
+    </div>
+
+{% endblock %}

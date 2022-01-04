@@ -2,6 +2,7 @@
 
 namespace App\Controller\Vacancy;
 
+use App\Model\Vacancy\Entity\Vacancy;
 use App\ReadModel\Vacancy\VacancyFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +15,8 @@ use App\Model\Vacancy\UseCase\Create;
  */
 class VacancyController extends AbstractController
 {
-    private const PER_PAGE = 1;
-    private $fetcher;
+    private const PER_PAGE = 10;
+    private VacancyFetcher $fetcher;
 
     public function __construct(VacancyFetcher $fetcher)
     {
@@ -31,14 +32,13 @@ class VacancyController extends AbstractController
     {
         $pagination = $this->fetcher->all($request->query->getInt('page',1), self::PER_PAGE);
 
-        dump($pagination);
         return $this->render('vacancy/index.html.twig',[
             'pagination' => $pagination,
         ]);
     }
 
     /**
-     * @Route("/create", name="users.create")
+     * @Route("/create", name="vacancies.create")
      * @param Request $request
      * @param Create\Handler $handler
      * @return Response
@@ -62,6 +62,16 @@ class VacancyController extends AbstractController
         return $this->render('vacancy/create.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route ("/{id}", name="vacancies.show")
+     * @param Vacancy $vacancy
+     * @return Response
+     */
+    public function show(Vacancy $vacancy): Response
+    {
+        return $this->render('vacancy/show.html.twig', compact('vacancy'));
     }
 
 }

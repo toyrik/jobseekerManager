@@ -31,7 +31,7 @@
                 {% for vacancy in pagination %}
                     <tr>
                         <td>{{ vacancy.id }}</td>
-                        <td>{{ vacancy.title }}</td>
+                        <td><a href="{{ path('vacancies.show', {'id': vacancy.id }) }}">{{ vacancy.title }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
