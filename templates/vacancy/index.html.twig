@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-        <div class="card">
+    <div class="card">
         <div class="card-header">
             <h3 class="card-title">Vacancies</h3>
         </div>
@@ -28,7 +28,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for vacancy in vacancies %}
+                {% for vacancy in pagination %}
                     <tr>
                         <td>{{ vacancy.id }}</td>
                         <td>{{ vacancy.title }}</td>
@@ -38,5 +38,8 @@
             </table>
         </div>
         <!-- /.card-body -->
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
     </div>
 {% endblock %}

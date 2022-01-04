@@ -14,6 +14,7 @@ use App\Model\Vacancy\UseCase\Create;
  */
 class VacancyController extends AbstractController
 {
+    private const PER_PAGE = 1;
     private $fetcher;
 
     public function __construct(VacancyFetcher $fetcher)
@@ -26,12 +27,13 @@ class VacancyController extends AbstractController
      * @return Response
      * @throws \Doctrine\DBAL\Exception
      */
-    public function index():Response
+    public function index(Request $request):Response
     {
-        $vacancies = $this->fetcher->all();
+        $pagination = $this->fetcher->all($request->query->getInt('page',1), self::PER_PAGE);
 
+        dump($pagination);
         return $this->render('vacancy/index.html.twig',[
-            'vacancies' => $vacancies,
+            'pagination' => $pagination,
         ]);
     }
 
