@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Vacancy\UseCase\Create;
 use App\Model\Vacancy\UseCase\Edit;
+use App\Model\Vacancy\UseCase\Status;
 
 /**
  * @Route ("/vacancies")
@@ -73,16 +74,40 @@ class VacancyController extends AbstractController
      * @param Vacancy $vacancy
      * @return Response
      */
-    public function show(Vacancy $vacancy): Response
+    public function show(
+        Vacancy $vacancy,
+        Request $request,
+        Status\Handler $statusHandler
+    ): Response
     {
-        return $this->render('vacancy/show.html.twig', compact('vacancy'));
+        $statusCommand = Status\Command::fromVacancy($vacancy);
+        $statusForm = $this->createForm(Status\Form::class, $statusCommand);
+        $statusForm->handleRequest($request);
+        if ($statusForm->isSubmitted() && $statusForm->isValid()) {
+            try {
+                $statusHandler->handle($statusCommand);
+                return $this->redirectToRoute('vacancies.show', ['id' => $vacancy->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('vacancy/show.html.twig', [
+            'vacancy' => $vacancy,
+            'statusForm' => $statusForm->createView(),
+        ]);
     }
 
     /**
      * @Route("/{id}/edit", name="vacancies.edit")
      *
      */
-    public function edit(Vacancy $vacancy, Request $request, Edit\Handler $handler): Response
+    public function edit(
+        Vacancy $vacancy,
+        Request $request,
+        Edit\Handler $handler
+    ): Response
     {
         $command = Edit\Command::fromVacancy($vacancy);
 
