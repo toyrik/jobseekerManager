@@ -1,0 +1,26 @@
+{% for message in app.flashes('success') %}
+    <div class="card card-success card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-check-circle"></i>
+                Success
+            </h3>
+        </div>
+        <div class="card-body">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+    <div class="card card-danger card-outline">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-exclamation-circle"></i>
+                Error
+            </h3>
+        </div>
+        <div class="card-body">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}

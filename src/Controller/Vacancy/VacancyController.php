@@ -58,6 +58,7 @@ class VacancyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             try{
                 $handler->handle($command);
+                $this->addFlash('success', 'Vacancy successfully added');
                 return $this->redirectToRoute('vacancies');
             } catch (\DomainException $e) {
                 $this->addFlash('error', $e->getMessage());

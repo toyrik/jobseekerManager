@@ -44,10 +44,12 @@
                                 <div class="col-12">
                                     {% block breadcrumbs %}{% endblock %}
                                 </div>
+                                <div class="col-12">
+                                {% include '_flashes.html.twig' %}
+                                </div>
                             </div>
                         </div>
                     </section>
-
                     {% block body %}{% endblock %}
                 </div>
             </div>

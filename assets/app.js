@@ -12,3 +12,11 @@ import './styles/app.scss';
 import './bootstrap';
 
 require('admin-lte');
+
+import $ from "jquery";
+
+$(function() {
+    
+});
+
+
