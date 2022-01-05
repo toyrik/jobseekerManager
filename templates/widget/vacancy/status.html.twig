@@ -1,0 +1,7 @@
+{% if status == 'new' %}
+    <span class="badge badge-warning">New</span>
+{% elseif status == 'active' %}
+    <span class="badge badge-success">Active</span>
+{% elseif status == 'archive' %}
+    <span class="badge badge-secondary">Archive</span>
+{% endif %}
