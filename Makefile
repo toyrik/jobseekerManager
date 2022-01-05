@@ -43,3 +43,6 @@ manager-assets-install:
 
 manager-assets-dev:
 	docker-compose run --rm manager-node npm run dev
+
+manager-fixtures-load:
+	docker-compose run --rm manager-php-cli php bin/console doctrine:fixtures:load
