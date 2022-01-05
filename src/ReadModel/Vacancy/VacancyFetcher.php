@@ -26,7 +26,8 @@ class VacancyFetcher
         $stmt = $this->connection->createQueryBuilder()
             ->select(
                 'id',
-                'title'
+                'title',
+                'status'
             )
             ->from('vacancies')
             ->orderBy('id');

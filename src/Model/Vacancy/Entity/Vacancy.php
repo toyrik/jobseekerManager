@@ -26,12 +26,18 @@ class Vacancy
      * @ORM\Column(type="string", name="description")
      */
     private string $description;
+    /**
+     * @var Status
+     * @ORM\Column(type="vacancy_status", length=16)
+     */
+    private Status $status;
 
     public function __construct(Id $id, string $title, string $description)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
+        $this->status = Status::new();
     }
 
     /**
@@ -62,5 +68,23 @@ class Vacancy
     {
         $this->title = $title;
         $this->description = $description;
+    }
+
+    public function changeStatus(Status $status): void
+    {
+        if ($this->status->isEqual($status)) {
+            throw new \DomainException('Status is alredy same');
+        }
+        $this->status = $status;
+    }
+
+    public function isNew():bool
+    {
+        return $this->status->isNew();
+    }
+
+    public function getStatus(): Status
+    {
+        return $this->status;
     }
 }
