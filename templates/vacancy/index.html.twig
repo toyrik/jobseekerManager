@@ -3,16 +3,15 @@
 {% block title %} Vacancies {% endblock %}
 
 {% block breadcrumbs %}
-    <ol class="breadcrumb float-sm-left">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item active">Vacancies</li>
-    </ol>
 {% endblock %}
+
+{% block content_title %}Vacancies{% endblock %}
 
 {% block body %}
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Vacancies</h3>
             <div class="card-tools">
                 <ul class="nav nav-pills">
                     <li class="nav-item"><a class="btn btn-primary" href="{{ path('vacancies.create') }}">Create</a></li>
@@ -22,6 +21,32 @@
         <!-- /.card-header -->
 
         <div class="card-body p-0">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filter</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md">
+                            {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-md-2">{{ form_widget(form.title) }}</div>
+                                <div class="col-md-2">{{ form_widget(form.status) }}</div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="{{ path('vacancies') }}" class="btn btn-outline-secondary">Reset</a>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table class="table table-striped">
                 <thead>
                 <tr>

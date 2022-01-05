@@ -4,6 +4,7 @@ namespace App\Controller\Vacancy;
 
 use App\Controller\ErrorHandler;
 use App\Model\Vacancy\Entity\Vacancy;
+use App\ReadModel\Vacancy\Filter;
 use App\ReadModel\Vacancy\VacancyFetcher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,10 +36,20 @@ class VacancyController extends AbstractController
      */
     public function index(Request $request):Response
     {
-        $pagination = $this->fetcher->all($request->query->getInt('page',1), self::PER_PAGE);
+        $filter = new Filter\Filter();
+
+        $form = $this->createForm(Filter\Form::class, $filter);
+        $form->handleRequest($request);
+
+        $pagination = $this->fetcher->all(
+            $filter,
+            $request->query->getInt('page',1),
+            self::PER_PAGE
+        );
 
         return $this->render('vacancy/index.html.twig',[
             'pagination' => $pagination,
+            'form' => $form->createView()
         ]);
     }
 

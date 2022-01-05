@@ -2,6 +2,7 @@
 
 namespace App\ReadModel\Vacancy;
 
+use App\ReadModel\Vacancy\Filter\Filter;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -21,14 +22,26 @@ class VacancyFetcher
     /**
      * @throws Exception
      */
-    public function all(int $page, int $size): PaginationInterface
+    public function all(Filter $filter, int $page, int $size): PaginationInterface
     {
         $stmt = $this->connection->createQueryBuilder()
             ->select(
                 '*'
             )
-            ->from('vacancies')
-            ->orderBy('date', 'desc');
+            ->from('vacancies');
+
+        if ($filter->title) {
+            $stmt->andWhere($stmt->expr()->like('LOWER(title)', ':title'));
+            $stmt->setParameter('title', '%' . mb_strtolower($filter->title) . '%');
+        }
+
+        if ($filter->status) {
+            $stmt->andWhere('status = :status');
+            $stmt->setParameter('status', $filter->status);
+        }
+
+
+        $stmt->orderBy('date', 'desc');
 
         return $this->paginator->paginate($stmt, $page, $size);
     }
