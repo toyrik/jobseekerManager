@@ -31,10 +31,16 @@ class Vacancy
      * @ORM\Column(type="vacancy_status", length=16)
      */
     private Status $status;
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $date;
 
-    public function __construct(Id $id, string $title, string $description)
+    public function __construct(Id $id, \DateTimeImmutable $date, string $title, string $description)
     {
         $this->id = $id;
+        $this->date = $date;
         $this->title = $title;
         $this->description = $description;
         $this->status = Status::new();
@@ -86,5 +92,10 @@ class Vacancy
     public function getStatus(): Status
     {
         return $this->status;
+    }
+
+    public function getDate(): \DateTimeImmutable
+    {
+        return $this->date;
     }
 }

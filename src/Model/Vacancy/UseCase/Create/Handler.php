@@ -22,6 +22,7 @@ class Handler
     {
         $vacancy = new Vacancy(
             Id::next(),
+            new \DateTimeImmutable(),
             $command->title,
             $command->description
         );

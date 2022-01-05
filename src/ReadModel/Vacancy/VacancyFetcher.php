@@ -25,12 +25,10 @@ class VacancyFetcher
     {
         $stmt = $this->connection->createQueryBuilder()
             ->select(
-                'id',
-                'title',
-                'status'
+                '*'
             )
             ->from('vacancies')
-            ->orderBy('id');
+            ->orderBy('date', 'desc');
 
         return $this->paginator->paginate($stmt, $page, $size);
     }
