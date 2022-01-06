@@ -13,7 +13,10 @@ class VacancyFetcher
     private Connection $connection;
     private $paginator;
 
-    public function __construct(Connection $connection ,PaginatorInterface $paginator)
+    public function __construct(
+        Connection $connection,
+        PaginatorInterface $paginator
+    )
     {
         $this->connection = $connection;
         $this->paginator = $paginator;
@@ -39,7 +42,6 @@ class VacancyFetcher
             $stmt->andWhere('status = :status');
             $stmt->setParameter('status', $filter->status);
         }
-
 
         $stmt->orderBy('date', 'desc');
 

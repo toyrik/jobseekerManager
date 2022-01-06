@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Vacancies {% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+    <li class="breadcrumb-item active">Persons</li>
+{% endblock %}
+
+{% block content_title %}Persons{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <div class="card-tools">
+                <ul class="nav nav-pills">
+                    <li class="nav-item"><a class="btn btn-primary" href="#">Create</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.card-header -->
+
+        <div class="card-body p-0">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filter</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md">
+                            {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-md-2">{{ form_widget(form.email) }}</div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <a href="{{ path('persons') }}" class="btn btn-outline-secondary">Reset</a>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for person in pagination %}
+                    <tr>
+                        <td><a href="#">{{ person.name }}</a></td>
+                        <td>{{ person.email }}</td>
+                        <td>{{ person.phone }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

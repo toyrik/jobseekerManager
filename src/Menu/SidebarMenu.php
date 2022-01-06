@@ -28,6 +28,15 @@ class SidebarMenu
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');
 
+        $menu->addChild('Persons', ['route' => 'persons'])
+            ->setExtra('icon', 'fas fa-id-card')
+            ->setExtra('routes', [
+                ['route' => 'persons'],
+                ['pattern' => '/^persons\..+/']
+            ])
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', 'nav-link');
+
         return $menu;
     }
 }

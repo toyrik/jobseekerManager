@@ -20,7 +20,7 @@ use App\Model\Vacancy\UseCase\Status;
 class VacancyController extends AbstractController
 {
     private const PER_PAGE = 10;
-    private $errors;
+    private ErrorHandler $errors;
     private VacancyFetcher $fetcher;
 
     public function __construct(VacancyFetcher $fetcher, ErrorHandler $handler)
@@ -31,6 +31,7 @@ class VacancyController extends AbstractController
 
     /**
      * @Route ("", name="vacancies")
+     * @param Request $request
      * @return Response
      * @throws \Doctrine\DBAL\Exception
      */
@@ -47,7 +48,7 @@ class VacancyController extends AbstractController
             self::PER_PAGE
         );
 
-        return $this->render('vacancy/index.html.twig',[
+        return $this->render('app/vacancy/index.html.twig',[
             'pagination' => $pagination,
             'form' => $form->createView()
         ]);
@@ -76,7 +77,7 @@ class VacancyController extends AbstractController
             }
         }
 
-        return $this->render('vacancy/create.html.twig', [
+        return $this->render('app/vacancy/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -84,6 +85,8 @@ class VacancyController extends AbstractController
     /**
      * @Route ("/{id}", name="vacancies.show")
      * @param Vacancy $vacancy
+     * @param Request $request
+     * @param Status\Handler $statusHandler
      * @return Response
      */
     public function show(
@@ -105,7 +108,7 @@ class VacancyController extends AbstractController
             }
         }
 
-        return $this->render('vacancy/show.html.twig', [
+        return $this->render('app/vacancy/show.html.twig', [
             'vacancy' => $vacancy,
             'statusForm' => $statusForm->createView(),
         ]);
@@ -136,7 +139,7 @@ class VacancyController extends AbstractController
             }
         }
 
-        return $this->render('vacancy/edit.html.twig',[
+        return $this->render('app/vacancy/edit.html.twig',[
             'vacancy' => $vacancy,
             'form' => $form->createView(),
         ]);

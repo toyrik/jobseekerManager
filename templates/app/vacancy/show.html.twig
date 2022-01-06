@@ -3,18 +3,18 @@
 {% block title %}Vacancies{% endblock %}
 
 {% block breadcrumbs %}
-    <ol class="breadcrumb float-sm-left">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('vacancies') }}">Vacancies</a></li>
         <li class="breadcrumb-item active">{{ vacancy.title }}</li>
-    </ol>
 {% endblock %}
+
+{% block content_title %}{{ vacancy.title }}{% endblock %}
 
 {% block body %}
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">{{ vacancy.title }}</h3>
+            <h3 class="card-title"></h3>
 
             <div class="card-tools">
                 <ul class="nav nav-pills">
