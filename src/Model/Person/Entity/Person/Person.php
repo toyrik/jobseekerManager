@@ -59,6 +59,16 @@ class Person
         $this->name = $name;
     }
 
+    public function changeEmail(Email $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function changePhone(string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
     /**
      * @return Id
      */

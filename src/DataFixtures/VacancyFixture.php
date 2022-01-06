@@ -8,7 +8,6 @@ use App\Model\Vacancy\Entity\Status;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Faker\Generator;
 
 class VacancyFixture extends Fixture
 {
