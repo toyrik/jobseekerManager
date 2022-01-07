@@ -55,7 +55,7 @@ class VacancyController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="vacancies.create")
+     * @Route("/create", name="vacancy.create")
      * @param Request $request
      * @param Create\Handler $handler
      * @return Response
@@ -83,56 +83,55 @@ class VacancyController extends AbstractController
     }
 
     /**
-     * @Route ("/{id}", name="vacancies.show")
+     * @Route ("/{id}", name="vacancy.show")
      * @param Vacancy $vacancy
-     * @param Request $request
-     * @param Status\Handler $statusHandler
      * @return Response
      */
     public function show(
         Vacancy $vacancy,
+    ): Response
+    {
+        return $this->render('app/vacancy/show.html.twig', [
+            'vacancy' => $vacancy,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="vacancy.edit")
+     * @param Vacancy $vacancy
+     * @param Request $request
+     * @param Edit\Handler $handler
+     * @param Status\Handler $statusHandler
+     * @return Response
+     */
+    public function edit(
+        Vacancy $vacancy,
         Request $request,
+        Edit\Handler $handler,
         Status\Handler $statusHandler
     ): Response
     {
+        $command = Edit\Command::fromVacancy($vacancy);
+
+        $mainForm = $this->createForm(Edit\Form::class, $command);
+        $mainForm->handleRequest($request);
+
+        if ($mainForm->isSubmitted() && $mainForm->isValid()) {
+            try {
+                $handler->handle($command);
+                return $this->redirectToRoute('vacancy.show',['id' => $vacancy->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
         $statusCommand = Status\Command::fromVacancy($vacancy);
         $statusForm = $this->createForm(Status\Form::class, $statusCommand);
         $statusForm->handleRequest($request);
         if ($statusForm->isSubmitted() && $statusForm->isValid()) {
             try {
                 $statusHandler->handle($statusCommand);
-                return $this->redirectToRoute('vacancies.show', ['id' => $vacancy->getId()]);
-            } catch (\DomainException $e) {
-                $this->errors->handle($e);
-                $this->addFlash('error', $e->getMessage());
-            }
-        }
-
-        return $this->render('app/vacancy/show.html.twig', [
-            'vacancy' => $vacancy,
-            'statusForm' => $statusForm->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="vacancies.edit")
-     *
-     */
-    public function edit(
-        Vacancy $vacancy,
-        Request $request,
-        Edit\Handler $handler
-    ): Response
-    {
-        $command = Edit\Command::fromVacancy($vacancy);
-
-        $form = $this->createForm(Edit\Form::class, $command);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $handler->handle($command);
-                return $this->redirectToRoute('vacancies.show',['id' => $vacancy->getId()]);
+                return $this->redirectToRoute('vacancy.show', ['id' => $vacancy->getId()]);
             } catch (\DomainException $e) {
                 $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
@@ -141,7 +140,21 @@ class VacancyController extends AbstractController
 
         return $this->render('app/vacancy/edit.html.twig',[
             'vacancy' => $vacancy,
-            'form' => $form->createView(),
+            'form' => $mainForm->createView(),
+            'statusForm' => $statusForm->createView(),
+        ]);
+    }
+
+    /**
+     * @Route ("/{id}/settings", name="vacancy.settings.person")
+     * @param Vacancy $vacancy
+     * @param Request $request
+     * @return Response
+     */
+    public function assignPerson(Vacancy $vacancy, Request $request): Response
+    {
+        return $this->render('app/vacancy/settings/assign_person.html.twig', [
+            'vacancy' => $vacancy
         ]);
     }
 

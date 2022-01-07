@@ -27,5 +27,8 @@ services:
     App\Menu\SidebarMenu:
         tags:
             - { name: knp_menu.menu_builder, method: build, alias: sidebar }
+    App\Menu\Vacancy\VacancySettingsMenu:
+        tags:
+            - { name: knp_menu.menu_builder, method: build, alias: vacancy_settings }
 
     cebe\markdown\GithubMarkdown:

@@ -23,7 +23,8 @@ class SidebarMenu
             ->setExtra('icon', 'fas fa-briefcase')
             ->setExtra('routes', [
                 ['route' => 'vacancies'],
-                ['pattern' => '/^vacancies\..+/']
+                ['pattern' => '/^vacancies\..+/'],
+                ['pattern' => '/^vacancy\..+/']
             ])
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');

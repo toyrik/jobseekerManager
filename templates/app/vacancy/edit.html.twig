@@ -12,14 +12,27 @@
 
 {% block body %}
 
-    <div class="card">
+    <div class="card card-primary card-outline card-outline-tabs">
+        <div class="card-header p-0 border-bottom-0">
+            {{ include('app/vacancy/_tabs.html.twig') }}
+        </div>
         <div class="card-body">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <div>
-                <button type="submit" class="btn btn-primary">Save</button>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_start(statusForm) }}
+                    {{ form_widget(statusForm.status, {'attr': {'class': 'custom-select form-control-border'}}) }}
+                    {{ form_end(statusForm) }}
+
+                </div>
             </div>
-            {{ form_end(form) }}
         </div>
     </div>
 
