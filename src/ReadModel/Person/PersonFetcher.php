@@ -41,7 +41,6 @@ class PersonFetcher
 
         $stmt->orderBy('name_first');
 
-        dump($stmt->getSQL());
         return $this->paginator->paginate($stmt, $page, $size);
     }
 

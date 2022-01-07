@@ -45,4 +45,9 @@ class Membership
     {
         return $this->person->getId()->isEqual($id);
     }
+
+    public function getPerson(): Person
+    {
+        return $this->person;
+    }
 }

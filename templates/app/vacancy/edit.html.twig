@@ -5,6 +5,7 @@
 {% block breadcrumbs %}
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item"><a href="{{ path('vacancies') }}">Vacancies</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('vacancy.show', {'id': vacancy.id}) }}">{{ vacancy.title }}</a></li>
         <li class="breadcrumb-item active">Edit</li>
 {% endblock %}
 
