@@ -2,6 +2,9 @@
 
 namespace App\Model\Vacancy\Entity;
 
+use App\Model\Person\Entity\Person\Id as PersonId;
+use App\Model\Person\Entity\Person\Person;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +39,11 @@ class Vacancy
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
+    /**
+     * @var ArrayCollection|Membership[]
+     * @ORM\OneToMany(targetEntity="Membership", mappedBy="vacancy", orphanRemoval=true, cascade={"all"})
+     */
+    private $memberships;
 
     public function __construct(Id $id, \DateTimeImmutable $date, string $title, string $description)
     {
@@ -44,6 +52,7 @@ class Vacancy
         $this->title = $title;
         $this->description = $description;
         $this->status = Status::new();
+        $this->memberships = new ArrayCollection();
     }
 
     /**
@@ -84,6 +93,36 @@ class Vacancy
         $this->status = $status;
     }
 
+    public function hasMember(PersonId $id): bool
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForPerson($id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function addPerson(Person $person)
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForPerson($person->getId())) {
+                throw new \DomainException('Person is already exists');
+            }
+        }
+        $this->memberships->add(new Membership($this, $person));
+    }
+
+    public function removePerson(PersonId $person)
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForPerson($person)) {
+                $this->memberships->removeElement($membership);
+            }
+        }
+        throw new \DomainException('Person is not found');
+    }
+
     public function isNew():bool
     {
         return $this->status->isNew();
@@ -97,5 +136,20 @@ class Vacancy
     public function getDate(): \DateTimeImmutable
     {
         return $this->date;
+    }
+
+    public function getMemberships()
+    {
+        return $this->memberships->toArray();
+    }
+
+    public function getMembership(PersonId $id): Membership
+    {
+        foreach ($this->memberships as $membership) {
+            if ($membership->isForPerson($id)) {
+                return $membership;
+            }
+        }
+        throw new \DomainException('Person is nof found');
     }
 }

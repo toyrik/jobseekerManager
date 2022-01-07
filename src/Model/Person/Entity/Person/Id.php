@@ -29,4 +29,9 @@ class Id
     {
         return $this->getValue();
     }
+
+    public function isEqual(self $other): bool
+    {
+        return $this->getValue() === $other->getValue();
+    }
 }

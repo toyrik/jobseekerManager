@@ -151,10 +151,11 @@ class VacancyController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function assignPerson(Vacancy $vacancy, Request $request): Response
+    public function settingsPerson(Vacancy $vacancy, Request $request): Response
     {
         return $this->render('app/vacancy/settings/assign_person.html.twig', [
-            'vacancy' => $vacancy
+            'vacancy' => $vacancy,
+            'memberships' => $vacancy->getMemberships()
         ]);
     }
 
