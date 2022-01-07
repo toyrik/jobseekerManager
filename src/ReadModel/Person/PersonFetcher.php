@@ -44,4 +44,16 @@ class PersonFetcher
         return $this->paginator->paginate($stmt, $page, $size);
     }
 
+    public function listIds()
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select(
+                'id',
+                'name_first ||\' \'|| name_last AS name',
+            )
+            ->from('persons')
+            ->orderBy('name');
+        return $stmt->fetchAllAssociative();
+    }
+
 }

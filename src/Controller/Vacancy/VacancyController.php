@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Vacancy\UseCase\Create;
 use App\Model\Vacancy\UseCase\Edit;
 use App\Model\Vacancy\UseCase\Status;
+use App\Model\Vacancy\UseCase\Membership;
 
 /**
  * @Route ("/vacancies")
@@ -146,16 +147,46 @@ class VacancyController extends AbstractController
     }
 
     /**
-     * @Route ("/{id}/settings", name="vacancy.settings.person")
+     * @Route ("/{id}/list/persons", name="vacancy.list.persons")
      * @param Vacancy $vacancy
      * @param Request $request
      * @return Response
      */
     public function settingsPerson(Vacancy $vacancy, Request $request): Response
     {
-        return $this->render('app/vacancy/settings/assign_person.html.twig', [
+        return $this->render('app/vacancy/membership/index.html.twig', [
             'vacancy' => $vacancy,
             'memberships' => $vacancy->getMemberships()
+        ]);
+    }
+
+    /**
+     * @Route ("/{id}/assign/persons", name="vacancy.assign.persons")
+     * @param Vacancy $vacancy
+     * @param Request $request
+     * @param Membership\Add\Handler $handler
+     * @return Response
+     */
+    public function assignPerson(Vacancy $vacancy, Request $request, Membership\Add\Handler $handler): Response
+    {
+        $command = new Membership\Add\Command($vacancy->getId()->getValue());
+
+        $form = $this->createForm(Membership\Add\Form::class, $command, ['vacancy' => $vacancy->getId()]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                return $this->redirectToRoute('vacancy.list.persons', ['id' => $vacancy->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('app/vacancy/membership/assign.html.twig', [
+            'vacancy' => $vacancy,
+            'form' => $form->createView(),
         ]);
     }
 

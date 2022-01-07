@@ -17,25 +17,10 @@
             {{ include('app/vacancy/_tabs.html.twig') }}
         </div>
         <div class="card-body">
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#" class="btn btn-primary">Assign</a></li>
-            </ul>
-            <table class="table table-hover text-nowrap">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
-                </thead>
-                {% for  members in memberships %}
-                    <tr>
-                        <td><a href="#">{{ members.person.name.full }}</a></td>
-                        <td>{{ members.person.email.value }}</td>
-                        <td>{{ members.person.phone }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Add</button>
+            {{ form_end(form) }}
         </div>
     </div>
 

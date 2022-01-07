@@ -42,12 +42,12 @@ class VacancySettingsMenu
         ->setLinkAttribute('class', 'nav-link');
 
         $menu->addChild('Person', [
-            'route' => 'vacancy.settings.person',
+            'route' => 'vacancy.list.persons',
             'routeParameters' => ['id' => $options['vacancy_id']]
         ])
         ->setExtra('routes', [
-            ['route' => 'vacancy.settings.person'],
-            ['pattern' => '/^vacancy.settings.person\..+/']
+            ['route' => 'vacancy.list.persons'],
+            ['pattern' => '/^vacancy.list.persons\..+/']
         ])
         ->setAttribute('class', 'nav-item')
         ->setLinkAttribute('class', 'nav-link');
