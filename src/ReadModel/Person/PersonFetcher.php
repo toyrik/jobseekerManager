@@ -2,8 +2,10 @@
 
 namespace App\ReadModel\Person;
 
+use App\Model\Person\Entity\Person\Person;
 use App\ReadModel\Person\Filter\Filter;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -11,14 +13,17 @@ class PersonFetcher
 {
     private $connection;
     private $paginator;
+    private $repository;
 
     public function __construct(
         Connection $connection,
+        EntityManagerInterface $em,
         PaginatorInterface $paginator
     )
     {
         $this->connection = $connection;
         $this->paginator = $paginator;
+        $this->repository = $em->getRepository(Person::class);
     }
 
     public function all(Filter$filter, int $page, int $size): PaginationInterface
@@ -54,6 +59,11 @@ class PersonFetcher
             ->from('persons')
             ->orderBy('name');
         return $stmt->fetchAllAssociative();
+    }
+
+    public function find(string $id):? Person
+    {
+        return $this->repository->find($id);
     }
 
 }
