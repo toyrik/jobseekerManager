@@ -80,10 +80,35 @@
                             </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                                    {{ form_start(form) }}
-                                    {{ form_widget(form) }}
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    {{ form_end(form) }}
+                            {{ form_start(form) }}
+                                <div class="row py-3">
+                                    <div class="col-md-6">
+                                        {{ form_label(form.firstName) }}
+                                        {{ form_widget(form.firstName) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_label(form.lastName) }}
+                                        {{ form_widget(form.lastName) }}
+                                    </div>
+                                </div>
+                                <div class="row py-3">
+                                    <div class="col-12">
+                                        {{ form_label(form.jobTitle) }}
+                                        {{ form_widget(form.jobTitle) }}
+                                    </div>
+                                </div>
+                                <div class="row py-3">
+                                    <div class="col-md-6">
+                                        {{ form_label(form.email) }}
+                                        {{ form_widget(form.email) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_label(form.phone) }}
+                                        {{ form_widget(form.phone) }}
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            {{ form_end(form) }}
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.card -->
