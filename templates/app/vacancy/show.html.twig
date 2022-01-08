@@ -17,6 +17,13 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-md-5">
+                    {{ form_start(statusForm) }}
+                    {{ form_widget(statusForm.status, {'attr': {'class': 'custom-select form-control-border'}}) }}
+                    {{ form_end(statusForm) }}
+                </div>
+            </div>
+            <div class="row">
                 <div class="post">
                     {{ vacancy.description | markdown }}
                 </div>

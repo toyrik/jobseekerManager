@@ -85,15 +85,33 @@ class VacancyController extends AbstractController
 
     /**
      * @Route ("/{id}", name="vacancy.show")
+     * @param Request $request
      * @param Vacancy $vacancy
+     * @param Status\Handler $statusHandler
      * @return Response
      */
     public function show(
+        Request $request,
         Vacancy $vacancy,
+        Status\Handler $statusHandler
     ): Response
     {
+        $statusCommand = Status\Command::fromVacancy($vacancy);
+        $statusForm = $this->createForm(Status\Form::class, $statusCommand);
+        $statusForm->handleRequest($request);
+        if ($statusForm->isSubmitted() && $statusForm->isValid()) {
+            try {
+                $statusHandler->handle($statusCommand);
+                return $this->redirectToRoute('vacancies', ['id' => $vacancy->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
         return $this->render('app/vacancy/show.html.twig', [
             'vacancy' => $vacancy,
+            'statusForm' => $statusForm->createView(),
         ]);
     }
 
@@ -102,14 +120,12 @@ class VacancyController extends AbstractController
      * @param Vacancy $vacancy
      * @param Request $request
      * @param Edit\Handler $handler
-     * @param Status\Handler $statusHandler
      * @return Response
      */
     public function edit(
         Vacancy $vacancy,
         Request $request,
-        Edit\Handler $handler,
-        Status\Handler $statusHandler
+        Edit\Handler $handler
     ): Response
     {
         $command = Edit\Command::fromVacancy($vacancy);
@@ -126,23 +142,10 @@ class VacancyController extends AbstractController
                 $this->addFlash('error', $e->getMessage());
             }
         }
-        $statusCommand = Status\Command::fromVacancy($vacancy);
-        $statusForm = $this->createForm(Status\Form::class, $statusCommand);
-        $statusForm->handleRequest($request);
-        if ($statusForm->isSubmitted() && $statusForm->isValid()) {
-            try {
-                $statusHandler->handle($statusCommand);
-                return $this->redirectToRoute('vacancy.show', ['id' => $vacancy->getId()]);
-            } catch (\DomainException $e) {
-                $this->errors->handle($e);
-                $this->addFlash('error', $e->getMessage());
-            }
-        }
 
         return $this->render('app/vacancy/edit.html.twig',[
             'vacancy' => $vacancy,
-            'form' => $mainForm->createView(),
-            'statusForm' => $statusForm->createView(),
+            'form' => $mainForm->createView()
         ]);
     }
 
