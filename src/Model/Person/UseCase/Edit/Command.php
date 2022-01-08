@@ -21,6 +21,7 @@ class Command
      */
     public $lastName;
 
+    public $jobTitle;
     public $email;
     public $phone;
 
@@ -34,9 +35,11 @@ class Command
     public static function fromPerson(Person $person): self
     {
         $command = new self($person->getId()->getValue());
-        $command->email = $person->getEmail()?->getValue();
         $command->firstName = $person->getName()->getFirst();
         $command->lastName = $person->getName()->getLast();
+        $command->jobTitle = $person->getJobTitle()?->getValue();
+        $command->email = $person->getEmail()?->getValue();
+        $command->phone = $person->getPhone()?->getValue();
         return $command;
     }
 

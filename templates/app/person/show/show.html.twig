@@ -27,8 +27,11 @@
                             </div>
 
                             <h3 class="profile-username text-center">{{ person.name.full }}</h3>
-
-                            <p class="text-muted text-center">HR</p>
+                            <p class="text-muted text-center">
+                                {% if person.jobtitle %}
+                                    {{ person.jobtitle.value }}
+                                {% endif %}
+                            </p>
 
                             <ul class="list-group list-group-unbordered mb-3">
 

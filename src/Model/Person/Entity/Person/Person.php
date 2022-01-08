@@ -36,8 +36,14 @@ class Person
     private $name;
 
     /**
+     * @var JobTitle|null
+     * @ORM\Column(type="job_title", nullable=true)
+     */
+    private $jobTitle;
+
+    /**
      * @var Phone|null
-     * @ORM\Column(type="string", name="person_phone", nullable=true)
+     * @ORM\Column(type="person_phone", name="person_phone", nullable=true)
      */
     private $phone;
 
@@ -57,6 +63,11 @@ class Person
     public function changeName(Name $name): void
     {
         $this->name = $name;
+    }
+
+    public function changeJobTitle(JobTitle $jobTitle): void
+    {
+        $this->jobTitle = $jobTitle;
     }
 
     public function changeEmail(Email $email): void
@@ -102,10 +113,18 @@ class Person
     }
 
     /**
-     * @return string|null
+     * @return Phone|null
      */
-    public function getPhone(): ?string
+    public function getPhone(): ?Phone
     {
         return $this->phone;
+    }
+
+    /**
+     * @return JobTitle|null
+     */
+    public function getJobTitle(): ?JobTitle
+    {
+        return $this->jobTitle;
     }
 }

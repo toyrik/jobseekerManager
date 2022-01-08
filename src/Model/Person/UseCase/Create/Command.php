@@ -16,6 +16,7 @@ class Command
      */
     public $lastName;
 
+    public $jobTitle;
     public $email;
     public $phone;
 

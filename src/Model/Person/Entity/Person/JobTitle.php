@@ -4,11 +4,11 @@ namespace App\Model\Person\Entity\Person;
 
 use Webmozart\Assert\Assert;
 
-class Phone
+class JobTitle
 {
     private $value;
 
-    public function __construct(string $value)
+    public function __construct(string$value)
     {
         Assert::notEmpty($value);
         $this->value = $value;
@@ -31,4 +31,5 @@ class Phone
     {
         return $this->getValue() === $other->getValue();
     }
+
 }

@@ -14,6 +14,7 @@ class Form extends AbstractType
         $builder
             ->add('firstName', Type\TextType::class, ['label' => 'First Name'])
             ->add('lastName', Type\TextType::class, ['label' => 'Last Name'])
+            ->add('jobTitle', Type\TextType::class, [ 'required' => false,'label' => 'Job Title'])
             ->add('email', Type\EmailType::class, [ 'required' => false,'label' => 'Email'])
             ->add('phone', Type\TextType::class, [ 'required' => false,'label' => 'Phone']);
     }

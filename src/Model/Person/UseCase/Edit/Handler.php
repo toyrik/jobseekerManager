@@ -5,6 +5,7 @@ namespace App\Model\Person\UseCase\Edit;
 use App\Model\Flusher;
 use App\Model\Person\Entity\Person\Email;
 use App\Model\Person\Entity\Person\Id;
+use App\Model\Person\Entity\Person\JobTitle;
 use App\Model\Person\Entity\Person\Name;
 use App\Model\Person\Entity\Person\Person;
 use App\Model\Person\Entity\Person\PersonRepository;
@@ -26,6 +27,10 @@ class Handler
         $person = $this->persons->get(new Id($command->id));
 
         $person->changeName(new Name($command->firstName, $command->lastName));
+
+        if ($command->jobTitle) {
+            $person->changeJobTitle(new JobTitle($command->jobTitle));
+        }
 
         if ($command->email) {
             $person->changeEmail(new Email($command->email));
