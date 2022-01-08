@@ -36,7 +36,7 @@ class Person
     private $name;
 
     /**
-     * @var string|null
+     * @var Phone|null
      * @ORM\Column(type="string", name="person_phone", nullable=true)
      */
     private $phone;
@@ -64,7 +64,7 @@ class Person
         $this->email = $email;
     }
 
-    public function changePhone(string $phone): void
+    public function changePhone(Phone $phone): void
     {
         $this->phone = $phone;
     }

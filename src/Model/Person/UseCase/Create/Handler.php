@@ -8,6 +8,7 @@ use App\Model\Person\Entity\Person\Id;
 use App\Model\Person\Entity\Person\Name;
 use App\Model\Person\Entity\Person\Person;
 use App\Model\Person\Entity\Person\PersonRepository;
+use App\Model\Person\Entity\Person\Phone;
 
 class Handler
 {
@@ -34,7 +35,7 @@ class Handler
             $person->changeEmail(new Email($command->email));
         }
         if ($command->phone) {
-            $person->changePhone($command->phone);
+            $person->changePhone(new Phone($command->phone));
         }
 
         $this->persons->add($person);
