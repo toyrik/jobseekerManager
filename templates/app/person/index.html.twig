@@ -14,7 +14,7 @@
         <div class="card-header">
             <div class="card-tools">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="btn btn-primary" href="#">Create</a></li>
+                    <li class="nav-item"><a class="btn btn-primary" href="{{ path('person.create') }}">Create</a></li>
                 </ul>
             </div>
         </div>
@@ -63,7 +63,7 @@
                 <tbody>
                 {% for person in pagination %}
                     <tr>
-                        <td><a href="#">{{ person.name }}</a></td>
+                        <td><a href="{{ path('person.show', {'id': person.id}) }}">{{ person.name }}</a></td>
                         <td>{{ person.email }}</td>
                         <td>{{ person.phone }}</td>
                     </tr>

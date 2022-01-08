@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Show Person {% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ path('persons') }}">Persons</a></li>
+    <li class="breadcrumb-item active">Show</li>
+{% endblock %}
+
+{% block content_title %}Show Person {{ person.name.full }}{% endblock %}
+
+{% block body %}
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="{% if person.email %}
+{{ gravatar(person.email.value, 24) }}{% else %}{{ asset('img/logonav.png') }}{% endif %}" alt="User profile picture">
+                            </div>
+
+                            <h3 class="profile-username text-center">{{ person.name.full }}</h3>
+
+                            <p class="text-muted text-center">HR</p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+
+                                {% if person.email %}
+                                <li class="list-group-item">
+                                    <b>Email</b>
+                                    <a class="float-right" href="mailto:{{ person.email.value }}">
+                                        {{ person.email.value }}
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if person.phone %}
+                                <li class="list-group-item">
+                                    <b>Phone</b> <a class="float-right" href="tel:{{ person.phone }}">{{ person.phone }}</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <!-- About Me Box -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">About Me</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card"><div class="card-header p-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-tools float-right">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                                    {{ form_start(form) }}
+                                    {{ form_widget(form) }}
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    {{ form_end(form) }}
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+{% endblock %}

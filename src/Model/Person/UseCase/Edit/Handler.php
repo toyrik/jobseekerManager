@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Person\UseCase\Create;
+namespace App\Model\Person\UseCase\Edit;
 
 use App\Model\Flusher;
 use App\Model\Person\Entity\Person\Email;
@@ -22,14 +22,10 @@ class Handler
 
     public function handle(Command $command):void
     {
-        $person = new Person(
-            Id::next(),
-            new \DateTimeImmutable(),
-            new Name(
-                $command->firstName,
-                $command->lastName,
-            )
-        );
+        $person = $this->persons->get(new Id($command->id));
+
+        $person->changeName(new Name($command->firstName, $command->lastName));
+
         if ($command->email) {
             $person->changeEmail(new Email($command->email));
         }

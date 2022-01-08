@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\Person\UseCase\Create;
+namespace App\Model\Person\UseCase\Edit;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type;
