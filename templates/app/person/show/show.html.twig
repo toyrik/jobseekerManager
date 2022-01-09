@@ -48,6 +48,13 @@
                                     <b>Phone</b> <a class="float-right" href="tel:{{ person.phone }}">{{ person.phone }}</a>
                                 </li>
                                 {% endif %}
+                                {% if(person.networks)  %}
+                                    {% for network in person.networks %}
+                                        <li class="list-group-item">
+                                            <b>{{ network.network }}</b> <a class="float-right" href="#">{{ network.identity }}</a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif  %}
                             </ul>
                         </div>
                         <!-- /.card-body -->
@@ -61,7 +68,6 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            {% dump(person.networks)  %}
                         </div>
                         <!-- /.card-body -->
                     </div>

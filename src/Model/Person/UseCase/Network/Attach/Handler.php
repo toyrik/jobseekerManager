@@ -20,7 +20,7 @@ class Handler
     public function handle(Command $command): void
     {
         if ($this->persons->hasByNetwork($command->network, $command->identity)) {
-            throw new \DomainException('Network is already attached.');
+            throw new \DomainException('Profile is already in use.');
         }
 
         $person = $this->persons->get(new Id($command->person));

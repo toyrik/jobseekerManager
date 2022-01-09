@@ -35,12 +35,12 @@ class PersonRepository
 
     public function hasByNetwork(string $network, string $identity): bool
     {
-        return $this->repo->createQueryBuilder('t')
+        return !empty($this->repo->createQueryBuilder('t')
             ->select('COUNT(t.id)')
             ->innerJoin('t.networks', 'n')
             ->andWhere('n.network = :network and n.identity = :identity')
             ->setParameter('network', $network)
             ->setParameter('identity', $identity)
-            ->getQuery()->getSingleColumnResult() > 0;
+            ->getQuery()->getSingleColumnResult());
     }
 }
