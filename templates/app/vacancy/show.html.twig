@@ -16,8 +16,8 @@
             {{ include('app/vacancy/_tabs.html.twig') }}
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-5">
+            <div class="row py-3">
+                <div class="col">
                     {{ form_start(statusForm) }}
                     {{ form_widget(statusForm.status, {'attr': {'class': 'custom-select form-control-border'}}) }}
                     {{ form_end(statusForm) }}
