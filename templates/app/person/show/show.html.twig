@@ -61,6 +61,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
+                            {% dump(person.networks)  %}
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -68,7 +69,8 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
-                    <div class="card"><div class="card-header p-2">
+                    <div class="card">
+                        <div class="card-header p-2">
                             <div class="row">
                                 <div class="col">
                                     <div class="card-tools float-right">
@@ -80,35 +82,60 @@
                             </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            {{ form_start(form) }}
+                            {{ form_start(edit_form) }}
                                 <div class="row py-3">
                                     <div class="col-md-6">
-                                        {{ form_label(form.firstName) }}
-                                        {{ form_widget(form.firstName) }}
+                                        {{ form_label(edit_form.firstName) }}
+                                        {{ form_widget(edit_form.firstName) }}
                                     </div>
                                     <div class="col-md-6">
-                                        {{ form_label(form.lastName) }}
-                                        {{ form_widget(form.lastName) }}
+                                        {{ form_label(edit_form.lastName) }}
+                                        {{ form_widget(edit_form.lastName) }}
                                     </div>
                                 </div>
                                 <div class="row py-3">
                                     <div class="col-12">
-                                        {{ form_label(form.jobTitle) }}
-                                        {{ form_widget(form.jobTitle) }}
+                                        {{ form_label(edit_form.jobTitle) }}
+                                        {{ form_widget(edit_form.jobTitle) }}
                                     </div>
                                 </div>
                                 <div class="row py-3">
                                     <div class="col-md-6">
-                                        {{ form_label(form.email) }}
-                                        {{ form_widget(form.email) }}
+                                        {{ form_label(edit_form.email) }}
+                                        {{ form_widget(edit_form.email) }}
                                     </div>
                                     <div class="col-md-6">
-                                        {{ form_label(form.phone) }}
-                                        {{ form_widget(form.phone) }}
+                                        {{ form_label(edit_form.phone) }}
+                                        {{ form_widget(edit_form.phone) }}
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                            {{ form_end(form) }}
+                            {{ form_end(edit_form) }}
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-tools float-right">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            {{ form_start(network_form) }}
+                            <div class="row py-3">
+                                <div class="col-md-6">
+                                    {{ form_widget(network_form) }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            {{ form_end(network_form) }}
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.card -->

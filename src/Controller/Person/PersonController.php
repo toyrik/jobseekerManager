@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Model\Person\UseCase\Create;
 use App\Model\Person\UseCase\Edit;
+use App\Model\Person\UseCase\Network;
 
 /**
  * @Route ("/persons")
@@ -84,18 +85,38 @@ class PersonController extends AbstractController
 
     /**
      * @param Person $person
+     * @param Request $request
+     * @param Edit\Handler $editHandler
+     * @param Network\Attach\Handler $networkHandler
      * @return Response
      * @Route ("/{id}", name="person.show", requirements={"id"=Guid::PATTERN})
      */
-    public function show(Person $person, Request $request, Edit\Handler $handler): Response
+    public function show(
+        Person $person,
+        Request $request,
+        Edit\Handler $editHandler,
+        Network\Attach\Handler $networkHandler
+    ): Response
     {
-        $command = Edit\Command::fromPerson($person);
-        $form = $this->createForm(Edit\Form::class, $command);
-        $form->handleRequest($request);
+        $editCommand = Edit\Command::fromPerson($person);
+        $editForm = $this->createForm(Edit\Form::class, $editCommand);
+        $editForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
             try {
-                $handler->handle($command);
+                $editHandler->handle($editCommand);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        $networkCommand = new Network\Attach\Command($person->getId()->getValue());
+        $networkForm = $this->createForm(Network\Attach\Form::class, $networkCommand);
+        $networkForm->handleRequest($request);
+        if ($networkForm->isSubmitted() && $networkForm->isValid()) {
+            try {
+                $networkHandler->handle($networkCommand);
             } catch (\DomainException $e) {
                 $this->errors->handle($e);
                 $this->addFlash('error', $e->getMessage());
@@ -104,7 +125,8 @@ class PersonController extends AbstractController
 
         return $this->render('app/person/show/show.html.twig', [
             'person' => $person,
-            'form' => $form->createView()
+            'edit_form' => $editForm->createView(),
+            'network_form' => $networkForm->createView(),
         ]);
     }
 }

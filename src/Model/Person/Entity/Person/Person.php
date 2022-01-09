@@ -2,6 +2,7 @@
 
 namespace App\Model\Person\Entity\Person;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -46,12 +47,18 @@ class Person
      * @ORM\Column(type="person_phone", name="person_phone", nullable=true)
      */
     private $phone;
+    /**
+     * @var Network[]|ArrayCollection
+     * @ORM\OneToMany (targetEntity="Network", mappedBy="person", orphanRemoval=true, cascade={"persist"})
+     */
+    private $networks;
 
     public function __construct(Id $id, \DateTimeImmutable $date, Name $name)
     {
         $this->id = $id;
         $this->date = $date;
         $this->name = $name;
+        $this->networks = new ArrayCollection();
     }
 
     public function edit(Email $email, Name $name): void
@@ -78,6 +85,27 @@ class Person
     public function changePhone(Phone $phone): void
     {
         $this->phone = $phone;
+    }
+
+    public function attachNetwork(string $network, string $identity): void
+    {
+        foreach ($this->networks as $existing) {
+            if ($existing->isForNetwork($network)) {
+                throw new \DomainException('Network is already attached.');
+            }
+        }
+        $this->networks->add(new Network($this, $network, $identity));
+    }
+
+    public function detachNetwork(string $network, string $identity): void
+    {
+        foreach ($this->networks as $existing) {
+            if ($existing->isFor($network, $identity)) {
+                $this->networks->removeElement($existing);
+                return;
+            }
+        }
+        throw new \DomainException('Network is not attached.');
     }
 
     /**
@@ -126,5 +154,13 @@ class Person
     public function getJobTitle(): ?JobTitle
     {
         return $this->jobTitle;
+    }
+
+    /**
+     * @return Network[]
+     */
+    public function getNetworks(): array
+    {
+        return $this->networks->toArray();
     }
 }
