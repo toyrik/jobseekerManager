@@ -30,13 +30,15 @@ class PersonFetcher
     {
         $stmt = $this->connection->createQueryBuilder()
             ->select(
-                'id',
+                'p.id',
                 'date',
                 'name_first ||\' \'|| name_last AS name',
                 'email',
-                'person_phone AS phone'
+                'person_phone AS phone',
+                'n.identity as telegram'
             )
-            ->from('persons');
+            ->from('persons', 'p')
+            ->leftJoin('p','person_networks', 'n', 'p.id = n.person_id AND n.network = \'Telegram\'');
 
 
         if ($filter->email) {

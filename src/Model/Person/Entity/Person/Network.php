@@ -14,9 +14,9 @@ use Webmozart\Assert\Assert;
  */
 class Network
 {
-    public const VK = 'VK';
-    public const HABR = 'Habr';
-    public const TELEGRAM = 'Telegram';
+    public const VK = 'https://vk.com/';
+    public const HABR = 'https://career.habr.com/';
+    public const TELEGRAM = 'https://telegram.me/';
 
     /**
      * @var string

@@ -51,7 +51,7 @@
                                 {% if(person.networks)  %}
                                     {% for network in person.networks %}
                                         <li class="list-group-item">
-                                            <b>{{ network.network }}</b> <a class="float-right" href="#">{{ network.identity }}</a>
+                                            <b></b> <a class="float-right" href="{{ network.network }}/{{ network.identity }}">{{ network.identity }}</a>
                                         </li>
                                     {% endfor %}
                                 {% endif  %}
