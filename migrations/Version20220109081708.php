@@ -20,15 +20,11 @@ final class Version20220109081708 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX UNIQ_4DFF111C608487BC6A95E9C4');
-        $this->addSql('DROP INDEX IDX_4DFF111C217BBB47');
-        $this->addSql('CREATE TEMPORARY TABLE __temp__person_networks AS SELECT id, person_id, network, identity FROM person_networks');
-        $this->addSql('DROP TABLE person_networks');
         $this->addSql('CREATE TABLE person_networks (id CHAR(36) NOT NULL COLLATE BINARY --(DC2Type:guid)
         , person_id CHAR(36) NOT NULL COLLATE BINARY --(DC2Type:person_id)
         , network VARCHAR(32) DEFAULT NULL COLLATE BINARY, identity VARCHAR(32) DEFAULT NULL COLLATE BINARY, PRIMARY KEY(id), CONSTRAINT FK_4DFF111C217BBB47 FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE)');
-        $this->addSql('INSERT INTO person_networks (id, person_id, network, identity) SELECT id, person_id, network, identity FROM __temp__person_networks');
-        $this->addSql('DROP TABLE __temp__person_networks');
+//        $this->addSql('INSERT INTO person_networks (id, person_id, network, identity) SELECT id, person_id, network, identity FROM __temp__person_networks');
+//        $this->addSql('DROP TABLE __temp__person_networks');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_4DFF111C608487BC6A95E9C4 ON person_networks (network, identity)');
         $this->addSql('CREATE INDEX IDX_4DFF111C217BBB47 ON person_networks (person_id)');
         $this->addSql('CREATE TEMPORARY TABLE __temp__persons AS SELECT id, date, email, person_phone, name_first, name_last, job_title FROM persons');
