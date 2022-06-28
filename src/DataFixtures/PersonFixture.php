@@ -6,6 +6,7 @@ use App\Model\Person\Entity\Person\Email;
 use App\Model\Person\Entity\Person\Id;
 use App\Model\Person\Entity\Person\Name;
 use App\Model\Person\Entity\Person\Person;
+use App\Model\Person\Entity\Person\Phone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
@@ -28,7 +29,7 @@ class PersonFixture extends Fixture
             );
 
             $person->changeEmail(new Email($faker->email()));
-            $person->changePhone($faker->e164PhoneNumber());
+            $person->changePhone(new Phone($faker->e164PhoneNumber()));
 
             $manager->persist($person);
         }
